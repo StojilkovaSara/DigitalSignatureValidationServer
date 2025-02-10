@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Signature Validation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function validateFile() {
+            var fileInput = document.getElementById('fileInput');
+            var filePath = fileInput.value;
+            var allowedExtensions = /(\.pdf)$/i;
+            var errorMessageElement = document.getElementById('error-message');
+
+            // Reset error message
+            errorMessageElement.innerText = '';
+
+            // Check if file is selected
+            if (filePath === '') {
+                return true; // Allow form submission if no file is selected
+            }
+
+            // Check if the file is a PDF
+            if (!allowedExtensions.exec(filePath)) {
+                errorMessageElement.innerText = 'Please upload a valid PDF file.';
+                fileInput.value = ''; // Clear the input
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission if validation passes
+        }
+    </script>
+</head>
+<body>
+<div th:insert="fragments/header :: header"></div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header text-center">
+                    <h2>Upload File for Signature Validation</h2>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{/home/validate}" method="post" enctype="multipart/form-data" onsubmit="return validateFile()">
+                        <div class="mb-3">
+                            <label for="fileInput" class="form-label">Select PDF File</label>
+                            <input type="file" name="file" id="fileInput" class="form-control" accept=".pdf" required>
+                            <div id="error-message" class="text-danger mt-2"></div>
+                            <!-- Thymeleaf Error Message -->
+                            <div th:if="${errorMessage}" class="text-danger mt-2">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Validate</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p class="text-muted">Only PDF files with valid digital signatures are supported.</p>
+                </div>
+            </div>
+
+
+
+            <!-- Error message section -->
+            <div class="alert alert-danger mt-3" th:if="${error != null}">
+                <p th:text="${error}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

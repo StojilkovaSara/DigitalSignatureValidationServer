@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Signature Validation Result</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:insert="fragments/header :: header"></div>
+<div class="container mt-4">
+    <h1>Signature Validation Result</h1>
+
+    <div class="mb-3">
+        <h4>All Signatures</h4>
+    </div>
+
+
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Signature Name</th>
+            <th>Integrity and Authenticity</th>
+            <th>Covering the Whole Document</th>
+            <th>Certificate Validity</th>
+            <th>Sign Date</th>
+            <th>Signer</th>
+            <th>Revision</th>
+            <th>Total Revisions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="signature : ${signatureList}">
+            <td th:text="${signature.getSignatureName()}"></td>
+            <td>
+                        <span th:class="${signature.isIntegrityAndAuthenticity() ? 'badge badge-success' : 'badge badge-danger'}"
+                              th:text="${signature.isIntegrityAndAuthenticity() ? 'Valid' : 'Invalid'}"></span>
+            </td>
+            <td>
+                        <span th:class="${signature.isSignatureCoversWholeDocument() ? 'badge badge-success' : 'badge badge-danger'}"
+                              th:text="${signature.isSignatureCoversWholeDocument() ? 'Valid' : 'Invalid'}"></span>
+            </td>
+            <td>
+                        <span th:class="${signature.isCertificateValidity() ? 'badge badge-success' : 'badge badge-danger'}"
+                              th:text="${signature.isCertificateValidity() ? 'Valid' :
+                              (signature.isCertificateExpired ? 'Expired' : 'Not Yet Valid')}"></span>
+            </td>
+            <td th:text="${signature.getSignDate().getTime()}"></td>
+            <td th:text="${signature.getSigner()}"></td>
+            <td th:text="${signature.getRevision()}"></td>
+            <td th:text="${signature.getTotalRevision()}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="/home" class="btn btn-primary">Upload Another File</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

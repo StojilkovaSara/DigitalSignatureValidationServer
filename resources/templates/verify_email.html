@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h2>E-mail verification</h2>
+  <form th:action="@{'/verify_email'}" th:method="POST">
+    <div class="form-group">
+      <label for="code">Verification Code</label>
+      <input th:name="code" type="text" class="form-control" id="code" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</div>
+</body>
+</html>

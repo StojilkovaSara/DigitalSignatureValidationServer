@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<header style="padding: 10px; background-color: #f0f0f0; border-bottom: 1px solid #ccc;">
+  <nav style="display: flex; justify-content: space-between; align-items: center;">
+    <div class="user-info" style="font-size: 1.2em;">
+      <span>Welcome, <span th:text="${#authentication.name}">User</span></span>
+    </div>
+    <div class="navbar-menu" style="display: flex; gap: 10px;">
+      <a href="#"
+         style="padding: 5px 10px; text-decoration: none; color: #333; border: 1px solid #ccc; border-radius: 3px;"
+         th:href="@{/home/validated-files}">View Validated Files</a>
+      <a href="#"
+         style="padding: 5px 10px; text-decoration: none; color: #333; border: 1px solid #ccc; border-radius: 3px;"
+         th:href="@{/home/validated-signatures}">View Signatures</a> <!-- New Button -->
+      <a href="#"
+         style="padding: 5px 10px; text-decoration: none; color: #333; border: 1px solid #ccc; border-radius: 3px;"
+         th:href="@{/logout}">Logout</a>
+    </div>
+  </nav>
+</header>
+</body>
+</html>
